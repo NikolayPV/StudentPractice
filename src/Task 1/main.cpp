@@ -14,7 +14,7 @@ void write_result()
 		{
 			cout << result[i];
 		}
-		
+	
 		cout << "\n \n";
 }	
 
