@@ -1,54 +1,56 @@
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
+#include <cstring>
 
 using namespace std;
 
-char result[11];
-int i = 0;
+//-----------------------------------------------------------------------------------------
+void numberAsBinary( unsigned int number, char *_result, int looper);
 
-void write_result()
-{
-		i = i-1;
-		cout << "This namber in Bin = ";
-		for(i; i >= 0; i--)
-		{
-			cout << result[i];
-		}
-	
-		cout << "\n \n";
-}	
-
+//-----------------------------------------------------------------------------------------
 int main() 
 {
-	int giveDecNam;
-	int showBin;
-	int changes;
-	int oneOrZero;
+	const int MAX_SIZE_BIN_NAMB = 10;
+	char result[MAX_SIZE_BIN_NAMB];
+	unsigned int randDecNamb;
 	
-	for(int j = 0; j < 10; j++)
+	double counterBitInDec;
+
+	for(int j = 0; j < 10; ++j)
 	{
-		giveDecNam = 1 + rand() % 512;
-		cout << "Dec namber = " << giveDecNam << endl;
-			do
-			{
-				changes = giveDecNam / 2;
-					oneOrZero = giveDecNam - changes*2;
-				if ( 0 == oneOrZero)
-				{
-					result[i] = '0';
-				}
-				else
-				{
-					result[i] = '1';
-				}
-				giveDecNam = changes;
-				i++;
-			}
-		while(giveDecNam != 0);
+		randDecNamb = 1 + rand() % 512;
+		counterBitInDec = log2(randDecNamb);
 		
-		write_result();	
+		numberAsBinary(randDecNamb, result, counterBitInDec);
+		
+		cout << "This namber in Bin = " << result << endl << endl;
+		
+		memset(result, 0, MAX_SIZE_BIN_NAMB*sizeof(int)); 
 	}
-	
 	return 0;
+}
+
+//-----------------------------------------------------------------------------------------
+void numberAsBinary(unsigned int number, char *_result, int looper)
+{
+		cout << "Dec namber = " << number << endl;
+		 
+		while(looper >= 0)
+		{	
+			int changes = number / 2;
+			int oneOrZero = number - changes*2;
+			if ( 0 == oneOrZero)	
+			{
+				*(_result + looper) = '0';
+			}
+			else
+			{
+				*(_result + looper) = '1';
+			}
+			number = changes;
+			--looper;
+		}
+
 }
 
