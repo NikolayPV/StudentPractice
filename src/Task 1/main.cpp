@@ -3,64 +3,57 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <bitset>
 
 using namespace std;
 
 //-----------------------------------------------------------------------------------------
-void numberAsBinary( unsigned int number, char *_result, int indexLocationInMass);
+void numberAsBinary( unsigned int number, char *_result);
 
 //-----------------------------------------------------------------------------------------
 int main() 
 {
 	const int MAX_BIN_NUMBER_LENGTH = 10;
 	const int QUANTITY_DEC_DIGITS = 10;
-	
-	char result[MAX_BIN_NUMBER_LENGTH];
-	
 	unsigned int randomDecimalNamber;
-	uint16_t counterBitInDec;
+	int cleaningArray;
 	
-	int cleanMass;
-	
+	char *FindFirstUsed1;
+	char result[MAX_BIN_NUMBER_LENGTH];
+
 	for(int j = 0; j < QUANTITY_DEC_DIGITS; ++j)
 	{
 		randomDecimalNamber = 1 + rand() % 512;
 		
-		counterBitInDec = static_cast<uint16_t>(log2(randomDecimalNamber) + 1);
-		result[counterBitInDec] = '\0';
+		numberAsBinary(randomDecimalNamber, result);
+		result[MAX_BIN_NUMBER_LENGTH] = '\0';
 		
-		numberAsBinary(randomDecimalNamber, result, counterBitInDec);
-		
-		cout << "This namber in Bin = " << result << endl << endl;
-		
-		cleanMass = MAX_BIN_NUMBER_LENGTH*sizeof(int);
-		memset(result, 0, cleanMass); 
+		FindFirstUsed1 = strchr(result, '1');
+		cout << "This number in Bin = " << FindFirstUsed1 << endl;
+
+		cleaningArray = MAX_BIN_NUMBER_LENGTH*sizeof(int);
+		memset(result, 0, cleaningArray); 
 	}
 	return 0;
 }
 
 //-----------------------------------------------------------------------------------------
-void numberAsBinary(unsigned int number, char *result, int indexLocationInMass)
+void numberAsBinary(unsigned int number, char *result)
 {
-	cout << "Dec namber = " << number << endl;
-	int changes;
-	int oneOrZero;
+	int mask = 512;
 	
-	--indexLocationInMass;
-	
-	for( indexLocationInMass; indexLocationInMass >= 0; --indexLocationInMass)
-	{	
-		changes = number / 2;
-		oneOrZero = number - changes*2;
-		if ( 0 == oneOrZero)	
+	cout << "Dec number = " << number << endl;
+	for ( int i = 0; i <= 9; ++i )
+	{
+		if ((number & mask) > 0)
 		{
-			result[indexLocationInMass] = '0';
+			result[i] = '1';
 		}
 		else
 		{
-			result[indexLocationInMass] = '1';
+			result[i] = '0';
 		}
-		number = changes;
+		mask = (mask >> 1);
 	}
 
 }
