@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 #include <vector>
 
 /*******************************************************************
@@ -9,36 +9,46 @@
 ********************************************************************/ 
 
 using namespace std;
-
-void insertionSort1(int size, vector <int> &arr);
-
+//-----------------------------------------------------------------------------------------
+void insertionSort(vector <int>& _array);
+//-----------------------------------------------------------------------------------------
 int main() 
 {
-	unsigned int ARRAY_SIZE;
-   cin >> ARRAY_SIZE;
-   vector<int> array(ARRAY_SIZE);
-   for(int i = 0; i < ARRAY_SIZE; ++i)
+	unsigned int arraySize;
+   cin >> arraySize;
+   vector<int> array(arraySize);
+   
+   for(int i = 0; i < arraySize; ++i)
 	{
 		cin >> array[i];
    }
-   insertionSort1(ARRAY_SIZE, array);
-   for(int j = 0; j < ARRAY_SIZE; ++j) 
+   insertionSort(array);
+   for(int j = 0; j < arraySize; ++j) 
+   {
 		cout << array[j] << ' ';
+	}
    return 0;
 }
 
-void insertionSort1(int vectorSize, vector <int> &arr) 
+//-----------------------------------------------------------------------------------------
+void insertionSort (vector <int>& _array) 
 {
-	int cutedElement = arr.back();
-	int currentElemet = vectorSize - 2;
-	while(cutedElement <= arr.at(currentElemet))
+	int cutedElement = _array.back();
+	int currentElemet = _array.size() - 2;
+	
+	if(_array.size() > 1)
 	{
-		arr[currentElemet + 1] = arr[currentElemet];
-		--currentElemet;
-		for(int j = 0; j < vectorSize; ++j) 	
-		cout << arr[j] << ' ';
-		cout << endl;
+		for(currentElemet; _array[currentElemet] > cutedElement && currentElemet >= 0; --currentElemet)
+		{
+			_array[currentElemet + 1] = _array[currentElemet];
+			
+			for(int i = 0; i < _array.size(); ++i) 
+			{
+				cout << _array[i] << ' ';
+			}
+			cout << endl;
+		}
+		currentElemet < 0 ?	_array[0] = cutedElement: _array[currentElemet + 1] = cutedElement;
 	}
-	arr[currentElemet + 1] = cutedElement;
 }
 
